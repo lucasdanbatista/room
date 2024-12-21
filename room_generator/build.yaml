@@ -1,0 +1,22 @@
+builders:
+  repository:
+    import: "package:room_generator/builder.dart"
+    builder_factories: [ "repositoryBuilder" ]
+    build_extensions: { ".dart": [ "repository.g.part" ] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: [ "source_gen|combining_builder" ]
+  database:
+    import: "package:room_generator/builder.dart"
+    builder_factories: [ "databaseBuilder" ]
+    build_extensions: { ".dart": [ "database.g.part" ] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: [ "source_gen|combining_builder" ]
+  entity:
+    import: "package:room_generator/builder.dart"
+    builder_factories: [ "entityBuilder" ]
+    build_extensions: { ".dart": [ "table.g.part" ] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: [ "source_gen|combining_builder" ]

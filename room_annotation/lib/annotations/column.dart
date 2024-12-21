@@ -1,0 +1,3 @@
+class Column {
+  const Column();
+}
