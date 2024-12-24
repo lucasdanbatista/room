@@ -1,6 +1,6 @@
 name: room_generator
+description: 'A code generator to use with `room_annotation` package.'
 version: 0.1.0
-publish_to: https://pub.dev
 repository: https://github.com/lucasdanbatista/room
 
 environment:
@@ -8,8 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  room_annotation:
-    path: ../room_annotation
+  room_annotation: ^0.1.0
   flutter:
     sdk: flutter
   analyzer: ^7.1.0
