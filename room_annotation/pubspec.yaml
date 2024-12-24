@@ -1,6 +1,6 @@
 name: room_annotation
 description: 'Annotations to use with `room_generator` package.'
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/lucasdanbatista/room
 
 environment:

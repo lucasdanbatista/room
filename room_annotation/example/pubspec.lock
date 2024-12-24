@@ -424,12 +424,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  room:
+  room_annotation:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: room_annotation
+      sha256: f72017a9cb1b86031433c31bca28f12296e22af507b9f54f83f6f65e85a73700
+      url: "https://pub.dev"
+    source: hosted
     version: "0.1.0"
   room_generator:
     dependency: "direct dev"

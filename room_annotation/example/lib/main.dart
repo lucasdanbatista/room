@@ -1,12 +1,50 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Column;
+import 'package:json_annotation/json_annotation.dart';
+import 'package:room_annotation/room_annotation.dart';
+import 'package:sqflite/sqflite.dart';
 
-import 'data/database.dart';
-import 'data/entities/company.dart';
-import 'data/repositories/company_repository.dart';
+part 'main.g.dart';
 
 void main() => runApp(const MyApp());
+
+@RoomDatabase(
+  version: 1,
+  entities: [Company],
+)
+class MyDatabase with _$MyDatabase {
+  @override
+  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
+    //TODO: run your db migrations here. See the docs from `sqflite` package.
+  }
+}
+
+@CrudRepository(
+  database: MyDatabase,
+  entity: Company,
+)
+class CompanyRepository with _$CompanyRepository {}
+
+@Entity()
+@JsonSerializable()
+class Company with $CompanyEntity {
+  @PrimaryKey()
+  final String document;
+
+  @Column()
+  String? name;
+
+  Company({
+    required this.document,
+    this.name,
+  });
+
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

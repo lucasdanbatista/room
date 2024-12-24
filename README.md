@@ -20,7 +20,7 @@ dev_dependencies:
 
 ```dart
 import 'package:json_annotation/json_annotation.dart';
-import 'package:room/room.dart';
+import 'package:room_annotation/room_annotation.dart';
 
 part 'company.g.dart';
 
@@ -48,7 +48,7 @@ class Company with $CompanyEntity {
 #### Create your database:
 
 ```dart
-import 'package:room/room.dart';
+import 'package:room_annotation/room_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'company.dart';
@@ -70,7 +70,7 @@ class MyDatabase with _$MyDatabase {
 #### Create your crud repository:
 
 ```dart
-import 'package:room/room.dart';
+import 'package:room_annotation/room_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'database.dart';
