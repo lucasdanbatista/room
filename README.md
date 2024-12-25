@@ -6,7 +6,7 @@ A code generator to use with `sqflite` package.
 
 ```yaml
 dependencies:
-  room_annotation: 0.1.0
+  room_annotation: ^0.1.1
   sqflite: ^2.4.1
   json_annotation: ^4.9.0
 
