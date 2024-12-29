@@ -10,7 +10,7 @@ mixin _$MyDatabase {
   Future<void> initialize() async {
     await openDatabase(
       'MyDatabase.db',
-      version: 5,
+      version: 1,
       onCreate: (db, version) async {
         await db.execute($CompanyEntity.sql);
       },
