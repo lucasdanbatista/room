@@ -6,7 +6,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:room_annotation/room_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
-class RepositoryGenerator extends GeneratorForAnnotation<CrudRepository> {
+class CrudRepositoryGenerator extends GeneratorForAnnotation<CrudRepository> {
   @override
   generateForAnnotatedElement(
     covariant ClassElement element,

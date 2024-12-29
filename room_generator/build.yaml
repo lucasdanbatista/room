@@ -1,8 +1,8 @@
 builders:
   repository:
     import: "package:room_generator/room_generator.dart"
-    builder_factories: [ "repositoryBuilder" ]
-    build_extensions: { ".dart": [ "repository.g.part" ] }
+    builder_factories: [ "crudRepositoryBuilder" ]
+    build_extensions: { ".dart": [ "crud_repository.g.part" ] }
     auto_apply: dependents
     build_to: cache
     applies_builders: [ "source_gen|combining_builder" ]

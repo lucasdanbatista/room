@@ -1,3 +1,8 @@
+## 0.1.3
+
+* Add documentation.
+* Rename files.
+
 ## 0.1.2
 
 * Bump version.
