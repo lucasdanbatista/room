@@ -7,7 +7,8 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
-  room_annotation: ^0.1.0
+  room_annotation:
+    path: ../room_annotation
   flutter:
     sdk: flutter
   sqflite: ^2.4.1
@@ -15,7 +16,7 @@ dependencies:
 
 dev_dependencies:
   room_generator:
-    path: ../../room_generator
+    path: ../room_generator
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0

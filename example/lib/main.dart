@@ -10,15 +10,10 @@ part 'main.g.dart';
 void main() => runApp(const MyApp());
 
 @RoomDatabase(
-  version: 1,
+  version: 3,
   entities: [Company],
 )
-class MyDatabase with _$MyDatabase {
-  @override
-  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
-    //TODO: run your db migrations here. See the docs from `sqflite` package.
-  }
-}
+class MyDatabase with _$MyDatabase {}
 
 @CrudRepository(
   database: MyDatabase,
@@ -28,16 +23,24 @@ class CompanyRepository with _$CompanyRepository {}
 
 @Entity()
 @JsonSerializable()
-class Company with $CompanyEntity {
+class Company {
   @PrimaryKey()
   final String document;
 
   @Column()
   String? name;
 
+  @Column(since: 2)
+  String? phone;
+
+  @Column(since: 3)
+  String? address;
+
   Company({
     required this.document,
     this.name,
+    this.phone,
+    this.address,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) =>

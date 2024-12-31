@@ -7,27 +7,42 @@ part of 'main.dart';
 // **************************************************************************
 
 mixin _$MyDatabase {
+  final List entities = [_$CompanyEntity()];
+
   Future<void> initialize() async {
     await openDatabase(
       'MyDatabase.db',
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute($CompanyEntity.sql);
-      },
-      onUpgrade: onUpgrade,
+      version: 3,
+      onCreate: (db, version) => _migrate(db, version),
+      onUpgrade: (db, oldVersion, newVersion) => _migrate(db, newVersion),
     );
   }
 
-  Future<void> onUpgrade(Database db, int oldVersion, int newVersion);
+  Future<void> _migrate(Database db, int newVersion) async {
+    for (final entity in entities) {
+      if (entity.migrations.containsKey(newVersion)) {
+        for (final migration in entity.migrations[newVersion]!) {
+          await db.execute(migration);
+        }
+      }
+    }
+  }
 }
 
 // **************************************************************************
 // EntityGenerator
 // **************************************************************************
 
-mixin $CompanyEntity {
-  static String get sql {
-    return 'create table Company (document text not null primary key,name text null );';
+interface class _$CompanyEntity {
+  Map<int, List<String>> get migrations {
+    return {
+      1: [
+        'create table Company (document text not null primary key);',
+        'alter table Company add column name text null;',
+      ],
+      2: ['alter table Company add column phone text null;'],
+      3: ['alter table Company add column address text null;'],
+    };
   }
 }
 
@@ -38,15 +53,19 @@ mixin $CompanyEntity {
 Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
       document: json['document'] as String,
       name: json['name'] as String?,
+      phone: json['phone'] as String?,
+      address: json['address'] as String?,
     );
 
 Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'document': instance.document,
       'name': instance.name,
+      'phone': instance.phone,
+      'address': instance.address,
     };
 
 // **************************************************************************
-// RepositoryGenerator
+// CrudRepositoryGenerator
 // **************************************************************************
 
 mixin _$CompanyRepository {
