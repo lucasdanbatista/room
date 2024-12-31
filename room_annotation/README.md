@@ -26,8 +26,7 @@ part 'company.g.dart';
 
 @Entity()
 @JsonSerializable()
-class Company
-    with $CompanyEntity {
+class Company {
   @PrimaryKey()
   final String document;
 
