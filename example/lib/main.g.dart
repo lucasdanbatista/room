@@ -7,7 +7,7 @@ part of 'main.dart';
 // **************************************************************************
 
 mixin _$MyDatabase {
-  final List entities = [_$CompanyEntity()];
+  final List entities = [$CompanyEntity];
 
   Future<void> initialize() async {
     await openDatabase(
@@ -33,8 +33,8 @@ mixin _$MyDatabase {
 // EntityGenerator
 // **************************************************************************
 
-interface class _$CompanyEntity {
-  Map<int, List<String>> get migrations {
+interface class $CompanyEntity {
+  static Map<int, List<String>> get migrations {
     return {
       1: [
         'create table Company (document text not null primary key);',

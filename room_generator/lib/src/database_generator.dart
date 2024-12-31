@@ -17,7 +17,7 @@ class DatabaseGenerator extends GeneratorForAnnotation<RoomDatabase> {
         .read('entities')
         .listValue
         .map(
-          (e) => '_\$${e.toTypeValue()!.getDisplayString()}Entity(),',
+          (e) => '\$${e.toTypeValue()!.getDisplayString()}Entity,',
         )
         .join('\n');
     final version = annotation.read('version').intValue;
