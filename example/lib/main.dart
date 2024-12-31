@@ -10,7 +10,7 @@ part 'main.g.dart';
 void main() => runApp(const MyApp());
 
 @RoomDatabase(
-  version: 3,
+  version: 4,
   entities: [Company],
 )
 class MyDatabase with _$MyDatabase {}
@@ -36,11 +36,15 @@ class Company {
   @Column(since: 3)
   String? address;
 
+  @Column(since: 4)
+  String? metadata;
+
   Company({
     required this.document,
     this.name,
     this.phone,
     this.address,
+    this.metadata,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) =>
@@ -101,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     final company = companies[index];
                     return ListTile(
-                      title: Text(company.name ?? 'empty'),
+                      title: Text(company.metadata ?? 'empty'),
                       leading: IconButton(
                         onPressed: () {},
                         icon: IconButton(
@@ -159,6 +163,7 @@ class _HomePageState extends State<HomePage> {
                   Company(
                     name: 'hello',
                     document: Random().nextInt(1000).toString(),
+                    metadata: Random().nextInt(1000).toString(),
                   ),
                 );
                 if (mounted) setState(() => isLoading = false);
