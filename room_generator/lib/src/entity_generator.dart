@@ -52,7 +52,6 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
       (m) => m
         ..name = 'migrations'
         ..type = MethodType.getter
-        ..static = true
         ..body = Code('return {$migrationsCode};')
         ..returns = refer('Map<int, List<String>>'),
     );

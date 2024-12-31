@@ -1,3 +1,7 @@
+## 0.2.4
+
+* Fix field.
+
 ## 0.2.3
 
 * Fix imports.
