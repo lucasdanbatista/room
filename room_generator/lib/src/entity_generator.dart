@@ -17,48 +17,54 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
   ) async {
     final primaryKey = element.fields.firstWhereOrNull(
       (e) => TypeChecker.fromRuntime(PrimaryKey).firstAnnotationOf(e) != null,
-    );
-    var pk = '';
-    if (primaryKey != null) {
-      pk = '${primaryKey.name} ${_type(primaryKey)} primary key';
-    }
-    if (pk.isNotEmpty) {
-      pk += ',';
-    }
+    )!;
+    final initialSchema =
+        "'create table ${element.name} (${primaryKey.name} ${_type(primaryKey)} primary key);'";
     final fields = element.fields.where(
       (e) => TypeChecker.fromRuntime(Column).firstAnnotationOf(e) != null,
     );
-    String columns = '';
+    final migrations = <int, List<String>>{
+      1: [initialSchema],
+    };
     for (final field in fields) {
-      final trailing = field != fields.last ? ',' : '';
-      columns += '${field.name} ${_type(field)} $trailing';
+      final since = TypeChecker.fromRuntime(Column)
+          .firstAnnotationOf(field)!
+          .getField('since')!
+          .toIntValue()!;
+      if (!migrations.containsKey(since)) {
+        migrations[since] = [];
+      }
+      migrations[since]!.add(
+        "'alter table ${element.name} add column ${field.name} ${_type(field)};'",
+      );
     }
-    if (columns.isEmpty) {
-      pk = pk.replaceAll(',', '');
-    }
+    final migrationsCode = migrations
+        .map(
+          (since, migrations) => MapEntry(
+            since,
+            "$since: [${migrations.join(',')}],",
+          ),
+        )
+        .values
+        .join();
     final emitter = DartEmitter();
     final method = Method(
       (m) => m
-        ..name = 'sql'
+        ..name = 'migrations'
         ..type = MethodType.getter
-        ..static = true
-        ..body = Code(
-          'return \'create table ${element.displayName} ('
-          '$pk'
-          '$columns'
-          ');\';',
-        )
-        ..returns = refer('String'),
+        ..body = Code('return {$migrationsCode};')
+        ..returns = refer('Map<int, List<String>>'),
     );
-    final mixin = Mixin(
+    final class$ = Class(
       (e) => e
-        ..name = '\$${element.name}Entity'
+        ..name = '_\$${element.name}Entity'
+        ..modifier = ClassModifier.interface
         ..methods.add(method),
     );
     final formatter = DartFormatter(
       languageVersion: DartFormatter.latestLanguageVersion,
     );
-    return formatter.format(mixin.accept(emitter).toString());
+    return formatter.format(class$.accept(emitter).toString());
   }
 
   String _type(FieldElement field) {

@@ -17,11 +17,17 @@ class DatabaseGenerator extends GeneratorForAnnotation<RoomDatabase> {
         .read('entities')
         .listValue
         .map(
-          (e) =>
-              'await db.execute(\$${e.toTypeValue()!.getDisplayString()}Entity.sql);',
+          (e) => '_\$${e.toTypeValue()!.getDisplayString()}Entity(),',
         )
         .join('\n');
     final version = annotation.read('version').intValue;
+    final entitiesField = Field(
+      (f) => f
+        ..name = 'entities'
+        ..modifier = FieldModifier.final$
+        ..type = Reference('List')
+        ..assignment = Code('[$entities]'),
+    );
     final initializeMethod = Method(
       (m) => m
         ..name = 'initialize'
@@ -32,17 +38,15 @@ class DatabaseGenerator extends GeneratorForAnnotation<RoomDatabase> {
           await openDatabase(
             '${element.displayName}.db',
             version: $version,
-            onCreate: (db, version) async {
-              $entities
-            },
-            onUpgrade: onUpgrade,
+            onCreate: (db, version) => _migrate(db, version),
+            onUpgrade: (db, oldVersion, newVersion) => _migrate(db, newVersion),
           );
           ''',
         ),
     );
-    final onUpgradeMethod = Method(
+    final migrateMethod = Method(
       (m) => m
-        ..name = 'onUpgrade'
+        ..name = '_migrate'
         ..returns = refer('Future<void>')
         ..modifier = MethodModifier.async
         ..requiredParameters.add(
@@ -56,23 +60,28 @@ class DatabaseGenerator extends GeneratorForAnnotation<RoomDatabase> {
           Parameter(
             (p) => p
               ..type = refer('int')
-              ..name = 'oldVersion',
-          ),
-        )
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..type = refer('int')
               ..name = 'newVersion',
           ),
+        )
+        ..body = Code(
+          '''
+          for (final entity in entities) {
+            if (entity.migrations.containsKey(newVersion)) {
+              for (final migration in entity.migrations[newVersion]!) {
+                await db.execute(migration);
+              }
+            }
+          }
+          ''',
         ),
     );
     final mixin = Mixin(
       (e) => e
         ..name = '_\$${element.displayName}'
+        ..fields.add(entitiesField)
         ..methods.addAll([
           initializeMethod,
-          onUpgradeMethod,
+          migrateMethod,
         ]),
     );
     final formatter = DartFormatter(

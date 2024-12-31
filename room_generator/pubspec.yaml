@@ -1,7 +1,7 @@
 name: room_generator
 description: 'A code generator to use with `room_annotation` package. 
 It will provide a simple way to use `sqflite`, avoid common boilerplate.'
-version: 0.1.3
+version: 0.2.0
 repository: https://github.com/lucasdanbatista/room
 topics:
   - codegen

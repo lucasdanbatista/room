@@ -6,12 +6,12 @@ A code generator to use with `sqflite` package.
 
 ```yaml
 dependencies:
-  room_annotation: ^0.1.0
+  room_annotation: ^0.2.0
   sqflite: ^2.4.1
   json_annotation: ^4.9.0
 
 dev_dependencies:
-  room_generator: ^0.1.0
+  room_generator: ^0.2.0
   build_runner: ^2.4.14
   json_serializable: ^6.9.2
 ```
@@ -26,16 +26,21 @@ part 'company.g.dart';
 
 @Entity()
 @JsonSerializable()
-class Company with $CompanyEntity {
+class Company
+    with $CompanyEntity {
   @PrimaryKey()
   final String document;
 
   @Column()
   String? name;
 
+  @Column(since: 2)
+  String? phone;
+
   Company({
     required this.document,
     this.name,
+    this.phone,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) =>
@@ -56,15 +61,10 @@ import 'company.dart';
 part 'database.g.dart';
 
 @RoomDatabase(
-  version: 1,
+  version: 2,
   entities: [Company],
 )
-class MyDatabase with _$MyDatabase {
-  @override
-  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
-    //TODO: run your db migrations here. See the docs from `sqflite` package.
-  }
-}
+class MyDatabase with _$MyDatabase {}
 ```
 
 #### Create your crud repository:

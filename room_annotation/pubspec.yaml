@@ -1,6 +1,6 @@
 name: room_annotation
 description: 'Annotations to use with `room_generator` package.'
-version: 0.1.2
+version: 0.2.0
 repository: https://github.com/lucasdanbatista/room
 topics:
   - sqflite
