@@ -59,7 +59,6 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
     final class$ = Class(
       (e) => e
         ..name = '\$${element.name}Entity'
-        ..modifier = ClassModifier.interface
         ..methods.add(method),
     );
     final formatter = DartFormatter(
