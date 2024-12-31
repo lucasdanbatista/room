@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Fix dependencies.
+
 ## 0.2.0
 
 * Add migrations.
