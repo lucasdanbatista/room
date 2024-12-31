@@ -10,7 +10,7 @@ part 'main.g.dart';
 void main() => runApp(const MyApp());
 
 @RoomDatabase(
-  version: 4,
+  version: 5,
   entities: [Company],
 )
 class MyDatabase with _$MyDatabase {}
@@ -39,12 +39,20 @@ class Company {
   @Column(since: 4)
   String? metadata;
 
+  @Column(since: 5)
+  String? metadata2;
+
+  @Column(since: 5)
+  String? metadata3;
+
   Company({
     required this.document,
     this.name,
     this.phone,
     this.address,
     this.metadata,
+    this.metadata2,
+    this.metadata3,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) =>

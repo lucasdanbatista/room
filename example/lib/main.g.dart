@@ -12,7 +12,7 @@ mixin _$MyDatabase {
   Future<void> initialize() async {
     await openDatabase(
       'MyDatabase.db',
-      version: 4,
+      version: 5,
       onCreate: (db, version) => _migrate(db, version),
       onUpgrade: (db, oldVersion, newVersion) => _migrate(db, newVersion),
     );
@@ -43,6 +43,10 @@ interface class _$CompanyEntity {
       2: ['alter table Company add column phone text null;'],
       3: ['alter table Company add column address text null;'],
       4: ['alter table Company add column metadata text null;'],
+      5: [
+        'alter table Company add column metadata2 text null;',
+        'alter table Company add column metadata3 text null;',
+      ],
     };
   }
 }
@@ -56,7 +60,10 @@ Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
       name: json['name'] as String?,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
-    )..metadata = json['metadata'] as String?;
+      metadata: json['metadata'] as String?,
+      metadata2: json['metadata2'] as String?,
+      metadata3: json['metadata3'] as String?,
+    );
 
 Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'document': instance.document,
@@ -64,6 +71,8 @@ Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'phone': instance.phone,
       'address': instance.address,
       'metadata': instance.metadata,
+      'metadata2': instance.metadata2,
+      'metadata3': instance.metadata3,
     };
 
 // **************************************************************************
