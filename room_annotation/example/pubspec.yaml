@@ -7,16 +7,14 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
-  room_annotation:
-    path: ../room_annotation
+  room_annotation: any
   flutter:
     sdk: flutter
   sqflite: ^2.4.1
   json_annotation: ^4.9.0
 
 dev_dependencies:
-  room_generator:
-    path: ../room_generator
+  room_generator: any
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0

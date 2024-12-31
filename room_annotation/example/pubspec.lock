@@ -427,17 +427,19 @@ packages:
   room_annotation:
     dependency: "direct main"
     description:
-      path: "../room_annotation"
-      relative: true
-    source: path
+      name: room_annotation
+      sha256: "49ac39b325e78f645fd4156dae6dd0000aade45541212dcfb2dbaa267d9ab416"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.2.0"
   room_generator:
     dependency: "direct dev"
     description:
-      path: "../room_generator"
-      relative: true
-    source: path
-    version: "0.2.0"
+      name: room_generator
+      sha256: "33cac4554e812523ab4815afa221828b439282db688914edb701926c3979b6e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   shelf:
     dependency: transitive
     description:

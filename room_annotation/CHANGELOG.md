@@ -1,3 +1,7 @@
+## 0.2.5
+
+* Fix example.
+
 ## 0.2.0
 
 * Add migrations.
